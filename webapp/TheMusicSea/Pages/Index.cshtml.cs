@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySql.Data;
 using System.Data;
+using TheMusicSea.Entities;
 using TheMusicSea.Services;
 
 namespace TheMusicSea.Pages
@@ -10,20 +11,22 @@ namespace TheMusicSea.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IMySqlService _mysql;
+        private readonly IDataService _data;
 
-        public IndexModel(ILogger<IndexModel> logger, IMySqlService mysql)
+        public readonly List<Department> Departments;
+
+        public IndexModel(ILogger<IndexModel> logger, IMySqlService mysql, IDataService data)
         {
             _logger = logger;
             _mysql = mysql;
+            _data = data;
+
+            Departments = _data.GetDepartments();
         }
 
         public void OnGet()
         {
-            var dt = _mysql.ExecuteReaderCommand("SELECT * FROM Department");
-            foreach (DataRow row in dt.Rows)
-            {
-                _logger.LogInformation(row["Name"].ToString());
-            }
+            
         }
     }
 }

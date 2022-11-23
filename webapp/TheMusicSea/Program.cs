@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IMySqlService, MySqlService>();
+builder.Services.AddSingleton<IDataService, DataService>();
 builder.Logging.AddJsonConsole();
 
 var app = builder.Build();
