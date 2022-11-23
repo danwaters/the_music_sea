@@ -11,7 +11,7 @@ drop table if exists Department;
 create table Department (
     ID int not null auto_increment,
     Name varchar (20),
-    Description varchar(20),
+    Description varchar(50),
 
     primary key (ID)
 );
