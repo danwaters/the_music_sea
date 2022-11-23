@@ -1,0 +1,16 @@
+﻿@page
+@model TheMusicSea.Pages.Administration.AdminModel
+@{
+	ViewData["Title"] = "Admin - Main";
+}
+<div class="text-center">
+    <h1 class="display-4">Administration</h1>
+    <p><strong>Welcome to the extremely secure admin page.</strong></p>
+    <p>What would you like to manage?</p>
+</div>
+<hr />
+<div class="container-fluid">
+    <ul>
+        <li><a href="@Url.Page("/Administration/Department/ListDepartments")">Departments</a></li>
+    </ul>
+</div>

@@ -10,6 +10,8 @@ namespace TheMusicSea.Services
         List<Department> GetDepartments();
         List<Item> GetItemsByDepartment(int departmentId);
         Department GetDepartmentById(int departmentId);
+        Department AddDepartment(string name, string description);
+        Department UpdateDepartment(int id, string name, string description);
     }
     public class DataService : IDataService
     {
@@ -67,6 +69,20 @@ namespace TheMusicSea.Services
             }
 
             return items;
+        }
+
+        public Department AddDepartment(string name, string description)
+        {
+            string sql = $"INSERT INTO Department (Name, Description) VALUES ('{name}', '{description}');";
+            int id = _mysql.ExecuteInsert(sql);
+            return new Department(id, name, description);
+        }
+
+        public Department UpdateDepartment(int id, string name, string description)
+        {
+            string sql = $"UPDATE Department SET Name = '{name}', Description = '{description}' WHERE ID = {id};";
+            _mysql.ExecuteUpdate(sql);
+            return new Department(id, name, description);
         }
     }
 }

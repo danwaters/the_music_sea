@@ -1,0 +1,16 @@
+﻿@page
+@model TheMusicSea.Pages.Administration.Department.ListDepartmentsModel
+@{
+	ViewData["Title"] = "Admin - Departments";
+}
+<div class="text-center">
+    <h1 class="display-4">Administration - Departments</h1>
+</div>
+<hr />
+<div class="container-fluid">
+	<a href="@Url.Page("/Administration/Department/AddUpdateDepartment")">Add New Department</a>
+	<form method="post">
+		<select name="departmentId" asp-for="SelectedDepartmentID" asp-items="Model.Options"></select>
+		<input type="submit" />
+	</form>
+</div>
