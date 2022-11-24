@@ -57,6 +57,7 @@ create table OrderStatus (
 
 create table CustomerOrder (
     ID int not null auto_increment,
+    CustomerID int not null,
     PlacedDate datetime,
     ShippedDate datetime,
     OrderStatusID int not null,
@@ -69,7 +70,12 @@ create table CustomerOrder (
     foreign key (OrderStatusID)
         references OrderStatus(ID)
         on delete restrict
-        on update cascade
+        on update cascade,
+        
+	foreign key (CustomerID)
+		references Customer(ID)
+        on delete restrict
+		on update cascade
 );
 
 create table Category (

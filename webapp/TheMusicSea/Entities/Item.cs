@@ -9,6 +9,7 @@
 		public double Price { get; set; }
 		public string PhotoURI { get; set; }
 		public int DepartmentID { get; private set; }
+		public List<Category> Categories { get; set; }
 
 		public Item(int sku, string name, string description, double msrp, double price, string photoUri, int departmentId)
 		{
@@ -19,6 +20,8 @@
 			this.Price = price;
 			this.PhotoURI = photoUri;
 			this.DepartmentID = departmentId;
+
+			this.Categories = new List<Category>();
 		}
 	}
 }
