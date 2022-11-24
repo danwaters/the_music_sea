@@ -8,7 +8,8 @@ namespace TheMusicSea.Pages
     public class BrowseDepartmentModel : PageModel
     {
         private readonly IDataService _data;
-        private List<Item> _items = new();
+        public List<Item> Items { get; set; }
+
         public readonly List<Department> Departments;
 
         public Department? Department { get; private set; }
@@ -20,8 +21,9 @@ namespace TheMusicSea.Pages
         }
         public void OnGet(int departmentId)
         {
-            this._items = _data.GetItemsByDepartment(departmentId);
             this.Department = _data.GetDepartmentById(departmentId);
+
+            this.Items = _data.GetItemsByDepartment(departmentId);
         }
     }
 }

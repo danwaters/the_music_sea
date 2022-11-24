@@ -100,7 +100,7 @@ create table Category (
 create table Item (
     ID int not null auto_increment,
     SKU varchar(20),
-    Name varchar(20),
+    Name varchar(100),
     Description varchar(255),
     MSRP decimal(7, 2),
     Price decimal(7, 2),

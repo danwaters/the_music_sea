@@ -14,6 +14,40 @@ namespace TheMusicSea.Entities
 		public int InventoryCount { get; set; }
 		public int DepartmentID { get; private set; }
 		public List<int> CategoryIDs { get; set; }
+		public bool IsOnSale
+		{
+			get
+			{
+				return Price < MSRP;
+			}
+		}
+
+		public string SalePercentage
+		{
+			get
+			{
+				if(IsOnSale)
+				{
+					double perc_off = (MSRP - Price) / MSRP;
+					return string.Format("({0:P0} off!)", perc_off);
+				}
+				else
+				{
+					return "";
+				}
+			}
+		}
+
+		public string SaleClass
+		{
+			get
+			{
+				if (IsOnSale)
+					return "alert-success";
+				else
+					return "";
+			}
+		}
 
 		public Item(int id, string sku, string name, string description, double msrp, double price, string photoUri, int inventoryCount, int departmentId)
 		{
