@@ -44,8 +44,14 @@ create table Customer (
     City varchar(20),
     StateProvince varchar(20),
     Country varchar(20),
-
-    primary key (ID)
+	SalesEngineerID int not null,
+    
+    primary key (ID),
+    
+    foreign key (SalesEngineerID)
+		references SalesEngineer(ID)
+        on delete restrict
+        on update cascade
 );
 
 create table OrderStatus (
@@ -58,6 +64,7 @@ create table OrderStatus (
 create table CustomerOrder (
     ID int not null auto_increment,
     CustomerID int not null,
+    SalesEngineerID int not null,
     PlacedDate datetime,
     ShippedDate datetime,
     OrderStatusID int not null,
@@ -75,7 +82,12 @@ create table CustomerOrder (
 	foreign key (CustomerID)
 		references Customer(ID)
         on delete restrict
-		on update cascade
+		on update cascade,
+        
+	foreign key (SalesEngineerID)
+		references SalesEngineer(ID)
+        on delete no action
+        on update cascade
 );
 
 create table Category (
