@@ -11,9 +11,10 @@ namespace TheMusicSea.Pages.Administration.Department
         [BindProperty]
         public string Description { get; set; }
 
-        public readonly IDataService _data;
         [BindProperty]
         public int? DepartmentID { get; set; }
+
+        public readonly IDataService _data;
 
         public AddUpdateDepartmentModel(IDataService data)
         {

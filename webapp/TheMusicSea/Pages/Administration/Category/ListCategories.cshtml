@@ -1,0 +1,16 @@
+﻿@page
+@model TheMusicSea.Pages.Administration.Category.ListCategoriesModel
+@{
+	ViewData["Title"] = "Admin - Categories";
+}
+<div class="text-center">
+    <h1 class="display-4">Administration - Item Categories</h1>
+</div>
+<hr />
+<div class="container-fluid">
+	<a href="@Url.Page("/Administration/Category/AddUpdateCategory")">Add New Category</a>
+	<form method="post">
+		<select name="categoryId" asp-for="SelectedCategoryID" asp-items="Model.Options"></select>
+		<input type="submit" value="Update"/>
+	</form>
+</div>

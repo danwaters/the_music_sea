@@ -1,0 +1,34 @@
+﻿@page
+@model TheMusicSea.Pages.Administration.Category.AddUpdateCategoryModel
+@{
+    ViewData["Title"] = "Categories";
+}
+<div class="text-center">
+    <h1 class="display-4">Administration - Categories</h1>
+    @if(Model.CategoryID == null)
+    {
+        <p><strong>Add a new category below</strong></p>
+    }
+    else
+    {
+        <p><strong>Update the category below</strong></p>
+    }
+</div>
+<hr />
+<div class="container">
+    <form method="post">
+        <input type="hidden" asp-for="CategoryID"/>
+        <div class="form-group row">
+            <label asp-for="Name" class="col-2">Name</label>
+            <input asp-for="Name" class="col-2" />
+        </div>
+        @if(Model.CategoryID == null)
+        {
+            <input type="submit" value="Add Category" />
+        }
+        else
+        {
+            <input type="submit" value="Update Category" />
+        }
+    </form>
+</div>

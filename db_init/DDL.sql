@@ -80,7 +80,7 @@ create table CustomerOrder (
 
 create table Category (
     ID int not null auto_increment,
-    Name varchar(20),
+    Name varchar(40),
 
     primary key(ID)
 );
