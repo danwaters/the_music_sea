@@ -1,0 +1,66 @@
+﻿@page
+@model TheMusicSea.Pages.Administration.Item.AddUpdateItemModel
+@{
+    ViewData["Title"] = "Items";
+}
+<div class="text-center">
+    <h1 class="display-4">Administration - Items</h1>
+    @if (Model.ItemID == null)
+    {
+        <p><strong>Add a new item below</strong></p>
+    }
+    else
+    {
+        <p><strong>Update the item below</strong></p>
+    }
+</div>
+<hr />
+<div class="container">
+    <form method="post">
+        <input type="hidden" asp-for="ItemID" />
+        <div class="form-group row">
+            <label asp-for="SKU" class="col-2">SKU</label>
+            <input asp-for="SKU" class="col-2" />
+        </div>
+        <div class="form-group row">
+            <label asp-for="DepartmentID" class="col-2">Department</label>
+            <select name="DepartmentID" asp-for="DepartmentID" asp-items="Model.DepartmentOptions" class="col-2"></select>
+        </div>
+        <div class="form-group row">
+            <label asp-for="CategoryIDs" class="col-2">Categories (select multiple)</label>
+            <select multiple name="CategoryIDs" asp-for="CategoryIDs" asp-items="Model.CategoryOptions" class="col-2"></select>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Name" class="col-2">Name</label>
+            <input asp-for="Name" class="col-2" />
+        </div>
+        <div class="form-group row">
+            <label asp-for="Description" class="col-2">Description</label>
+            <input asp-for="Description" class="col-2" />
+        </div>
+        <div class="form-group row">
+            <label asp-for="MSRP" class="col-2">MSRP</label>
+            <input asp-for="MSRP" class="col-2" />
+        </div>
+        <div class="form-group row">
+            <label asp-for="Price" class="col-2">Price</label>
+            <input asp-for="Price" class="col-2" />
+        </div>
+        <div class="form-group row">
+            <label asp-for="PhotoURI" class="col-2">Photo URI</label>
+            <input asp-for="PhotoURI" class="col-2" />
+        </div>
+        <div class="form-group row">
+            <label asp-for="InventoryCount" class="col-2">Available in inventory</label>
+            <input asp-for="InventoryCount" class="col-2" />
+        </div>
+        @if (Model.ItemID == null)
+        {
+            <input type="submit" value="Add Item" />
+        }
+        else
+        {
+            <input type="submit" value="Update Item" />
+        }
+    </form>
+</div>

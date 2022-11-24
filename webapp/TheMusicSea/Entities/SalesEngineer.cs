@@ -1,4 +1,6 @@
-﻿namespace TheMusicSea.Entities
+﻿using System.Data;
+
+namespace TheMusicSea.Entities
 {
     public class SalesEngineer
     {
@@ -20,6 +22,18 @@
             this.Phone = phone;
             this.SpecialtyDepartmentID = specialtyDepartmentId;
             this.PhotoURI = photoUri;
+        }
+
+        public static SalesEngineer FromDataRow(DataRow row)
+        {
+            return new SalesEngineer(
+                Convert.ToInt32(row["ID"]),
+                row["FirstName"].ToString(),
+                row["LastName"].ToString(),
+                row["Email"].ToString(),
+                row["Phone"].ToString(),
+                Convert.ToInt32(row["SpecialtyDepartmentID"]),
+                row["PhotoURI"].ToString());
         }
     }
 }

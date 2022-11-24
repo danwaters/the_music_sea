@@ -1,4 +1,6 @@
-﻿namespace TheMusicSea.Entities
+﻿using System.Data;
+
+namespace TheMusicSea.Entities
 {
     public class Category
     {
@@ -9,6 +11,13 @@
         {
             this.ID = id;
             this.Name = name;
+        }
+
+        public static Category FromDataRow(DataRow row)
+        {
+            return new Category(
+                Convert.ToInt32(row["ID"]),
+                row["Name"].ToString());
         }
     }
 }

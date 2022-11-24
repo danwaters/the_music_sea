@@ -1,4 +1,4 @@
-drop table if exists OrderItems;
+drop table if exists OrderItem;
 drop table if exists ItemCategory;
 drop table if exists Item;
 drop table if exists Category;
@@ -98,16 +98,18 @@ create table Category (
 );
 
 create table Item (
-    SKU int not null auto_increment,
+    ID int not null auto_increment,
+    SKU varchar(20),
     Name varchar(20),
     Description varchar(255),
     MSRP decimal(7, 2),
     Price decimal(7, 2),
     PhotoURI varchar(255),
+    InventoryCount int,
 
     DepartmentID int not null,
 
-    primary key (SKU),
+    primary key (ID),
 
     foreign key (DepartmentID)
         references Department(ID)
@@ -117,13 +119,13 @@ create table Item (
 
 create table ItemCategory (
     ID int not null auto_increment,
-    ItemSKU int not null,
+    ItemID int not null,
     CategoryID int not null,
 
     primary key (ID),
 
-    foreign key (ItemSKU)
-        references Item(SKU)
+    foreign key (ItemID)
+        references Item(ID)
         on delete cascade
         on update cascade,
 
@@ -133,10 +135,10 @@ create table ItemCategory (
         on update cascade
 );
 
-create table OrderItems (
+create table OrderItem (
     ID int not null auto_increment,
     OrderID int not null,
-    ItemSKU int not null,
+    ItemID int not null,
     Quantity int not null,
 
     primary key(ID),
@@ -146,8 +148,8 @@ create table OrderItems (
         on delete cascade
         on update cascade,
 
-    foreign key (ItemSKU)
-        references Item(SKU)
+    foreign key (ItemID)
+        references Item(ID)
         on delete cascade
         on update cascade
 );

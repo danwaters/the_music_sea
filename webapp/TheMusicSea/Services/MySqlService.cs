@@ -45,6 +45,18 @@ namespace TheMusicSea.Services
             return id;
         }
 
+        public int ExecuteMultiRowInsert(string sql)
+        {
+            var conn = new MySqlConnection(_connectionString);
+            conn.Open();
+
+            var cmd = new MySqlCommand(sql, conn);
+            int affected = cmd.ExecuteNonQuery();
+
+            conn.Close();
+            return affected;
+        }
+
         public bool ExecuteUpdate(string sql)
         {
             var conn = new MySqlConnection(_connectionString);
@@ -55,6 +67,18 @@ namespace TheMusicSea.Services
             conn.Close();
 
             return affected > 0;
+        }
+
+        public int ExecuteDelete(string sql)
+        {
+            var conn = new MySqlConnection(_connectionString);
+            conn.Open();
+
+            var cmd = new MySqlCommand(sql, conn);
+            var affected = cmd.ExecuteNonQuery();
+            conn.Close();
+
+            return affected;
         }
     }
 }

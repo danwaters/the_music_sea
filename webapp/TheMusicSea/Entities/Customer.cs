@@ -1,4 +1,6 @@
-﻿namespace TheMusicSea.Entities
+﻿using System.Data;
+
+namespace TheMusicSea.Entities
 {
     public class Customer
     {
@@ -29,6 +31,22 @@
             this.StateProvince = stateProvince;
             this.Postcode = postcode;
             this.Country = country;
+        }
+
+        public static Customer FromDataRow(DataRow row)
+        {
+            return new Customer(
+                Convert.ToInt32(row["ID"]),
+                row["FirstName"].ToString(),
+                row["LastName"].ToString(),
+                row["Email"].ToString(),
+                row["Phone"].ToString(),
+                row["AddressLine1"].ToString(),
+                row["AddressLine2"].ToString(),
+                row["City"].ToString(),
+                row["StateProvince"].ToString(),
+                row["Postcode"].ToString(),
+                row["Country"].ToString());
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace TheMusicSea.Entities
+﻿using System.Data;
+
+namespace TheMusicSea.Entities
 {
     public class OrderStatus
     {
@@ -9,6 +11,13 @@
         {
             this.ID = id;
             this.Status = status;
+        }
+
+        public static OrderStatus FromDataRow(DataRow row)
+        {
+            return new OrderStatus(
+                Convert.ToInt32(row["ID"]),
+                row["status"].ToString());
         }
     }
 }
