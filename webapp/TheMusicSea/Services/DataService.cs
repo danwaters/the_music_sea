@@ -20,6 +20,8 @@ namespace TheMusicSea.Services
         SalesEngineer GetSalesEngineerById(int engineerId);
         Item GetItemByID(int itemId);
         List<ItemCategory> GetItemCategoriesByItemID(int itemId);
+        Cart GetCartByCustomerID(int customerId);
+        Cart GetCartByID(int cartId);
         Department AddDepartment(string name, string description);
         Category AddCategory(string name);
         SalesEngineer AddSalesEngineer(string firstName, string lastName, string email, string phone, int specialtyDepartmentId, string photoUri);
@@ -158,6 +160,20 @@ namespace TheMusicSea.Services
 
             var row = dt.Rows[0];
             return Item.FromDataRow(row);
+        }
+        public Cart GetCartByCustomerID(int customerId)
+        {
+            string sql = $"SELECT ID, CustomerID FROM Cart WHERE CustomerID = {customerId}";
+            var dt = _mysql.ExecuteReaderCommand(sql);
+            var row = dt.Rows[0];
+            return Cart.FromDataRow(row);
+        }
+        public Cart GetCartByID(int cartId)
+        {
+            string sql = $"SELECT ID, CustomerID FROM Cart WHERE ID = {cartId}";
+            var dt = _mysql.ExecuteReaderCommand(sql);
+            var row = dt.Rows[0];
+            return Cart.FromDataRow(row);
         }
         public Department AddDepartment(string name, string description)
         {

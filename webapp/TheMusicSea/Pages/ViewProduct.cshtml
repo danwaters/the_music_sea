@@ -1,0 +1,33 @@
+﻿@page
+@model TheMusicSea.Pages.ViewProductModel
+@{
+    ViewData["Title"] = "Browse";
+}
+<div class="sidenav">
+    <h4>Browse Departments</h4>
+    @foreach (var dept in this.Model.Departments)
+    {
+        <a href="@Url.Page("/BrowseDepartment", new {departmentId = dept.ID})">@dept.Name</a>
+    }
+</div>
+@if(Model.Item != null)
+{
+    <div class="text-center">
+        <h1 class="display-5">@Model.Item.Name</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <img src="images/item/@Model.Item.PhotoURI" width="400"/>
+            </div>
+            <div class="col-sm">
+                <p><h3>@Model.Item.Name</h3></p>
+                <p>@Model.Item.Description</p>
+                <h4>MSRP: $@Model.Item.MSRP</h4>
+                <h4 class="@Model.Item.SaleClass">Price: $@Model.Item.Price @Model.Item.SalePercentage</h4>
+                <input type="submit" value="Add to Cart"/>
+            </div>
+        </div>
+    </div>
+}
+

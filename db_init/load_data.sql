@@ -114,3 +114,11 @@ insert into Item (SKU, Name, Description, MSRP, Price, PhotoURI, InventoryCount,
 delete from SalesEngineer where true;
 insert into SalesEngineer (FirstName, LastName, Email, Phone, SpecialtyDepartmentID, PhotoURI)
 	VALUES('Dan', 'Waters', 'danwaters@my.unt.edu', '469-993-3300', 1, 'dan_hs.jpg');
+    
+delete from Customer where true;
+insert into Customer (FirstName, LastName, Email, Phone, AddressLine1, AddressLine2, City, StateProvince, Postcode, Country, SalesEngineerID)
+	VALUES ('Bob', 'McTestuser', 'danwaters@my.unt.edu', '1-800-CALL-BOB', '123 Shady Test Lane', 'Apt. 302', 'Denton', 'TX', '12345', 'United States', 1);
+
+# Customer ID 1 (Bob McTestuser) gets assigned a cart (ID 1)
+# Ideally, when new users are created, they get their own cart, but user self-creation is out of scope for this project
+insert into Cart (CustomerID) VALUES (1);

@@ -1,3 +1,5 @@
+drop table if exists CartItem;
+drop table if exists Cart;
 drop table if exists OrderItem;
 drop table if exists ItemCategory;
 drop table if exists Item;
@@ -43,6 +45,7 @@ create table Customer (
     AddressLine2 varchar(20),
     City varchar(20),
     StateProvince varchar(20),
+    Postcode varchar(20),
     Country varchar(20),
 	SalesEngineerID int not null,
     
@@ -150,6 +153,37 @@ create table OrderItem (
 
     foreign key (ItemID)
         references Item(ID)
+        on delete cascade
+        on update cascade
+);
+
+create table Cart (
+	ID int not null auto_increment,
+    CustomerID int not null,
+    
+    primary key(ID),
+    
+    foreign key(CustomerID)
+		references Customer(ID)
+        on delete cascade
+        on update cascade
+);
+
+create table CartItem (
+	ID int not null auto_increment,
+    CartID int not null,
+    ItemID int,
+    Quantity int,
+    
+    primary key (ID),
+    
+    foreign key (CartID)
+		references Cart(ID)
+        on delete cascade
+        on update cascade,
+        
+	foreign key (ItemID)
+		references Item(ID)
         on delete cascade
         on update cascade
 );
