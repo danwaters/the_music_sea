@@ -16,4 +16,4 @@ insert into Category (Name) VALUES ("Acoustic Bass Guitars");
 
 delete from SalesEngineer where true;
 insert into SalesEngineer (FirstName, LastName, Email, Phone, SpecialtyDepartmentID, PhotoURI)
-	VALUES('Dan', 'Waters', 'danwaters@my.unt.edu', '469-993-3300', 1, 'dan.jpg');
+	VALUES('Dan', 'Waters', 'danwaters@my.unt.edu', '469-993-3300', 1, 'dan_hs.jpg');
