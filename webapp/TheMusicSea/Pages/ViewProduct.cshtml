@@ -23,6 +23,24 @@
             <div class="col-sm">
                 <p><h3>@Model.Item.Name</h3></p>
                 <p>@Model.Item.Description</p>
+                <p><strong>Categories:</strong></p>
+                <ul>
+                    @foreach(var s in Model.Categories)
+                    {
+                        <li>@s</li>
+                    }
+                </ul>
+                @if(Model.InStock)
+                {
+                    if(Model.LowStock)
+                    {
+                        <p class="alert-warning">@Model.LowStockMessage</p>
+                    }
+                    else
+                    {
+                        <p>@Model.StockMessage</p>
+                    }
+                }
                 <h4>MSRP: $@Model.Item.MSRP</h4>
                 <h4 class="@Model.Item.SaleClass">Price: $@Model.Item.Price @Model.Item.SalePercentage</h4>
                 <form method="post" class="form-inline">

@@ -12,6 +12,7 @@
 		<h5 class="card-title">@Model.SalesEngineerFullName</h5>
 		<p class="card-text">@Model.SalesEngineer.Phone</p>
 		<p class="card-text">@Model.SalesEngineer.Email</p>
+		<p class="card-text">Department: @Model.Department</p>
 		<a href="mailto:@Model.SalesEngineer.Email">Send email</a>
 	</div>
 	<a href="@Url.Page("/ViewOrders")" class="link-success">View my orders</a>

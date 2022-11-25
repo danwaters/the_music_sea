@@ -345,14 +345,14 @@ namespace TheMusicSea.Services
         }
         public SalesEngineer UpdateSalesEngineer(int id, string firstName, string lastName, string email, string phone, int specialtyDepartmentId, string photoUri)
         {
-            string sql = $"UPDATE SalesEngineer SET FirstName = '{firstName}', LastName = '{lastName}', Email = '{email}', Phone = '{phone}', SpecialtyDepartmentID = {specialtyDepartmentId}, PhotoURI = '{photoUri}';";
+            string sql = $"UPDATE SalesEngineer SET FirstName = '{firstName}', LastName = '{lastName}', Email = '{email}', Phone = '{phone}', SpecialtyDepartmentID = {specialtyDepartmentId}, PhotoURI = '{photoUri}' WHERE ID = {id};";
             _mysql.ExecuteUpdate(sql);
             return new SalesEngineer(id, firstName, lastName, email, phone, specialtyDepartmentId, photoUri);
         }
         public Item UpdateItem(int id, string sku, string name, string description, double msrp, double price, string photoUri, int inventoryCount, int departmentId, List<int> categoryIds)
         {
             // Update the main item metadata
-            string sql = $"UPDATE Item SET SKU = '{sku}', Name = '{name}', Description = '{description}', MSRP = {msrp}, Price = {price}, PhotoURI = '{photoUri}', InventoryCount = {inventoryCount}, DepartmentID = {departmentId};";
+            string sql = $"UPDATE Item SET SKU = '{sku}', Name = '{name}', Description = '{description}', MSRP = {msrp}, Price = {price}, PhotoURI = '{photoUri}', InventoryCount = {inventoryCount}, DepartmentID = {departmentId} WHERE ID = {id};";
             _mysql.ExecuteUpdate(sql);
 
             // Update the item categories

@@ -9,6 +9,7 @@ namespace TheMusicSea.Pages
     {
         private readonly IDataService _data;
         public SalesEngineer SalesEngineer { get; set; }
+        public string Department { get; set; }
         public string SalesEngineerFullName
         {
             get
@@ -24,6 +25,7 @@ namespace TheMusicSea.Pages
         {
             var customer = _data.GetCustomerById(Customer.DefaultCustomerID);
             SalesEngineer = _data.GetSalesEngineerById(customer.SalesEngineerID);
+            Department = _data.GetDepartmentById(SalesEngineer.SpecialtyDepartmentID).Name;
         }
     }
 }
