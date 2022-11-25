@@ -1,13 +1,13 @@
 ﻿@page
-@model TheMusicSea.Pages.ViewOrdersModel
+@model TheMusicSea.Pages.Administration.Order.ListOrdersModel
 @{
-	ViewData["Title"] = "My Orders";
+    ViewData["Title"] = "Orders";
 }
 <div class="text-center">
-    <h1 class="display-5">Past Orders</h1>
+    <h1 class="display-4">Administration - Orders</h1>
 </div>
-<hr/>
-@if(Model.Orders.Count() > 0)
+<hr />
+@if (Model.Orders.Count() > 0)
 {
     <table class="table">
         <thead class="table-dark">
@@ -20,12 +20,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var order in Model.Orders)
+            @foreach (var order in Model.Orders)
             {
                 <tr>
                     <td>@order.ID</td>
                     <td>@order.PlacedDate.ToShortDateString()</td>
-                    <td>@Model.OrderStatusOptions.Single(o => o.Value == order.OrderStatusID.ToString()).Text</td>
+                    <td>@Model.OrderStatusOptions.Single(o => o.Value == order.OrderStatusID.ToString()).Text
+                        <a href="@Url.Page("/Administration/Order/UpdateOrderStatus", new {orderId = order.ID})">Update Status</a>
+                    </td>
                     <td>@order.Total.ToString("C")</td>
                     <td>@order.TrackingCode</td>
                 </tr>
@@ -35,5 +37,5 @@
 }
 else
 {
-	<p>You haven't placed any orders yet. Hurry up and buy something already.</p>
+    <p>There are currently no orders in the system.</p>
 }

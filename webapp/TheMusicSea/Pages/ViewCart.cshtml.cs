@@ -60,6 +60,7 @@ namespace TheMusicSea.Pages
             CartItems = _data.GetCartItemsByCartId(CartID);
             var customer = _data.GetCustomerById(Customer.DefaultCustomerID);
             var order = _data.AddCustomerOrder(customer.ID, customer.SalesEngineerID, DateTime.Now, null, (int)OrderStatusEnum.Initiated, Subtotal, TaxAmount, Total, "");
+            _data.EmptyCart(CartID);
             return RedirectToPage("/OrderThankYou");
         }
 
@@ -67,18 +68,6 @@ namespace TheMusicSea.Pages
         {
             CartItems = _data.DeleteCartItemById(id);
             return Page();
-        }
-
-        private string GenerateTrackingCode()
-        {
-            var possibleChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-            var fakeTrackingCode = "1z";
-            Random rnd = new Random();
-            for(int i = 0; i < 16; i++)
-            {
-                fakeTrackingCode += possibleChars[rnd.Next(possibleChars.Length)];
-            }
-            return fakeTrackingCode;
         }
     }
 }

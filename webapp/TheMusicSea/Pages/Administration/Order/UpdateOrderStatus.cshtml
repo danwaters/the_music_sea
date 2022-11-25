@@ -1,0 +1,15 @@
+﻿@page
+@model TheMusicSea.Pages.Administration.Order.UpdateOrderStatusModel
+@{
+	ViewData["Title"] = "Update Order Status";
+}
+<div class="text-center">
+	<h1 class="display-4">Administration - Order Status</h1>
+	<hr />
+	<p>Update status for order @Model.Order.ID:</p>
+	<form method="POST">
+		<select name="OrderStatusID" asp-for="OrderStatusID" asp-items="@Model.OrderStatusOptions"></select>
+		<input type="submit" value="Update Status" />
+	</form>
+</div>
+

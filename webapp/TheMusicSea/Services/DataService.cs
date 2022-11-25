@@ -25,9 +25,13 @@ namespace TheMusicSea.Services
         Cart GetCartByID(int cartId);
         List<CartItem> GetCartItemsByCartId(int cartId);
         CartItem GetCartItemById(int cartItemId);
+        List<CustomerOrder> GetOrders();
+        List<OrderStatus> GetOrderStatuses();
         List<CustomerOrder> GetOrdersByCustomerId(int customerId);
+        CustomerOrder GetOrderById(int orderId);
         Customer GetCustomerById(int customerId);
         List<CartItem> DeleteCartItemById(int cartItemId);
+        Cart EmptyCart(int cartId);
         Department AddDepartment(string name, string description);
         Category AddCategory(string name);
         SalesEngineer AddSalesEngineer(string firstName, string lastName, string email, string phone, int specialtyDepartmentId, string photoUri);
@@ -38,6 +42,7 @@ namespace TheMusicSea.Services
         Category UpdateCategory(int id, string name);
         SalesEngineer UpdateSalesEngineer(int id, string firstName, string lastName, string email, string phone, int specialtyDepartmentId, string photoUri);
         Item UpdateItem(int id, string sku, string name, string description, double msrp, double price, string photoUri, int inventoryCount, int departmentId, List<int> categoryIds);
+        CustomerOrder UpdateOrder(int id, DateTime? shippedDate, int orderStatusId, string trackingCode);
     }
     public class DataService : IDataService
     {
@@ -204,6 +209,28 @@ namespace TheMusicSea.Services
             var row = dt.Rows[0];
             return CartItem.FromDataRow(row);
         }
+        public List<CustomerOrder> GetOrders()
+        {
+            string sql = $"SELECT ID, CustomerID, SalesEngineerID, PlacedDate, ShippedDate, OrderStatusID, Subtotal, Tax, Total, TrackingCode FROM CustomerOrder;";
+            var dt = _mysql.ExecuteReaderCommand(sql);
+            var orders = new List<CustomerOrder>();
+            foreach (DataRow row in dt.Rows)
+            {
+                orders.Add(CustomerOrder.FromDataRow(row));
+            }
+            return orders;
+        }
+        public List<OrderStatus> GetOrderStatuses()
+        {
+            string sql = $"SELECT ID, Status FROM OrderStatus";
+            var dt = _mysql.ExecuteReaderCommand(sql);
+            var orderStatuses = new List<OrderStatus>();
+            foreach(DataRow row in dt.Rows)
+            {
+                orderStatuses.Add(OrderStatus.FromDataRow(row));
+            }
+            return orderStatuses;
+        }
         public List<CustomerOrder> GetOrdersByCustomerId(int customerId)
         {
             string sql = $"SELECT ID, CustomerID, SalesEngineerID, PlacedDate, ShippedDate, OrderStatusID, Subtotal, Tax, Total, TrackingCode FROM CustomerOrder WHERE CustomerID = {customerId};";
@@ -214,6 +241,13 @@ namespace TheMusicSea.Services
                 orders.Add(CustomerOrder.FromDataRow(row));
             }
             return orders;
+        }
+        public CustomerOrder GetOrderById(int orderId)
+        {
+            string sql = $"SELECT ID, CustomerID, SalesEngineerID, PlacedDate, ShippedDate, OrderStatusID, Subtotal, Tax, Total, TrackingCode FROM CustomerOrder WHERE ID = {orderId};";
+            var dt = _mysql.ExecuteReaderCommand(sql);
+            var row = dt.Rows[0];
+            return CustomerOrder.FromDataRow(row);
         }
         public Customer GetCustomerById(int customerId)
         {
@@ -229,6 +263,12 @@ namespace TheMusicSea.Services
             _mysql.ExecuteDelete(sql);
 
             return GetCartItemsByCartId(cartItem.CartID);
+        }
+        public Cart EmptyCart(int cartId)
+        {
+            string sql = $"DELETE FROM CartItem WHERE CartID = {cartId}";
+            _mysql.ExecuteDelete(sql);
+            return GetCartByID(cartId);
         }
         public Department AddDepartment(string name, string description)
         {
@@ -336,6 +376,14 @@ namespace TheMusicSea.Services
             }
 
             return new Item(id, sku, name, description, msrp, price, photoUri, inventoryCount, departmentId);
+        }
+
+        public CustomerOrder UpdateOrder(int id, DateTime? shippedDate, int orderStatusId, string trackingCode)
+        {
+            string shipDate = shippedDate.HasValue ? $"'{shippedDate.Value.ToMySqlDatetime()}'" : "NULL";
+            string sql = $"UPDATE CustomerOrder SET OrderStatusID = {orderStatusId}, TrackingCode = '{trackingCode}', ShippedDate = {shipDate} WHERE ID = {id};";
+            _mysql.ExecuteUpdate(sql);
+            return GetOrderById(id);
         }
     }
 }

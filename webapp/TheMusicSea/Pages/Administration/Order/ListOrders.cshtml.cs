@@ -4,15 +4,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using TheMusicSea.Entities;
 using TheMusicSea.Services;
 
-namespace TheMusicSea.Pages
+namespace TheMusicSea.Pages.Administration.Order
 {
-    public class ViewOrdersModel : PageModel
+    public class ListOrdersModel : PageModel
     {
-        public List<CustomerOrder> Orders { get; set; }
         private readonly IDataService _data;
+        public List<CustomerOrder> Orders { get; set; }
         public List<SelectListItem> OrderStatusOptions { get; set; }
-
-        public ViewOrdersModel(IDataService data)
+        public ListOrdersModel(IDataService data)
         {
             _data = data;
             var orderStatuses = _data.GetOrderStatuses();
@@ -24,7 +23,7 @@ namespace TheMusicSea.Pages
         }
         public void OnGet()
         {
-            this.Orders = _data.GetOrdersByCustomerId(Customer.DefaultCustomerID);
+            Orders = _data.GetOrders();
         }
     }
 }
