@@ -4,6 +4,10 @@ namespace TheMusicSea.Entities
 {
     public class Customer
     {
+        // This field helps us view the app from the perspective of the test user.
+        // In real life, this would be replaced with a login flow and cookie storage.
+        // Customer 1 is prepopulated in the database.
+        public static int DefaultCustomerID = 1;
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -15,10 +19,11 @@ namespace TheMusicSea.Entities
         public string StateProvince { get; set; }
         public string Postcode { get; set; }
         public string Country { get; set; }
+        public int SalesEngineerID { get; set; }
 
         public Customer(int id, string firstName, string lastName, string email, string phone,
             string addressLine1, string addressLine2, string city, string stateProvince,
-            string postcode, string country)
+            string postcode, string country, int salesEngineerId)
         {
             this.ID = id;
             this.FirstName = firstName;
@@ -31,6 +36,7 @@ namespace TheMusicSea.Entities
             this.StateProvince = stateProvince;
             this.Postcode = postcode;
             this.Country = country;
+            this.SalesEngineerID = salesEngineerId;
         }
 
         public static Customer FromDataRow(DataRow row)
@@ -46,7 +52,8 @@ namespace TheMusicSea.Entities
                 row["City"].ToString(),
                 row["StateProvince"].ToString(),
                 row["Postcode"].ToString(),
-                row["Country"].ToString());
+                row["Country"].ToString(),
+                Convert.ToInt32(row["SalesEngineerID"]));
         }
     }
 }

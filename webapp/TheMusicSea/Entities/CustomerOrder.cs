@@ -7,7 +7,7 @@ namespace TheMusicSea.Entities
         public int ID { get; set; }
         public int CustomerID { get; set; }
         public DateTime PlacedDate { get; set; }
-        public DateTime ShippedDate { get; set; }
+        public DateTime? ShippedDate { get; set; }
         public int OrderStatusID { get; set; }
         public double Subtotal { get; set; }
         public double Tax { get; set; }
@@ -15,7 +15,7 @@ namespace TheMusicSea.Entities
         public string TrackingCode { get; set; }
         public List<OrderItem> OrderItems { get; set; }
 
-        public CustomerOrder(int id, int customerId, DateTime placedDate, DateTime shippedDate,
+        public CustomerOrder(int id, int customerId, DateTime placedDate, DateTime? shippedDate,
             int orderStatusId, double subtotal, double tax, double total, string trackingCode)
         {
             this.ID = id;
@@ -36,7 +36,7 @@ namespace TheMusicSea.Entities
                 Convert.ToInt32(row["ID"]),
                 Convert.ToInt32(row["CustomerID"]),
                 Convert.ToDateTime(row["PlacedDate"]),
-                Convert.ToDateTime(row["ShippedDate"]),
+                row["ShippedDate"] == DBNull.Value ? null : Convert.ToDateTime(row["ShippedDate"]),
                 Convert.ToInt32(row["OrderStatusID"]),
                 Convert.ToDouble(row["Subtotal"]),
                 Convert.ToDouble(row["Tax"]),

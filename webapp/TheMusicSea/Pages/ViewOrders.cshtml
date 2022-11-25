@@ -1,0 +1,39 @@
+﻿@page
+@model TheMusicSea.Pages.ViewOrdersModel
+@{
+	ViewData["Title"] = "My Orders";
+}
+<div class="text-center">
+    <h1 class="display-5">Past Orders</h1>
+</div>
+<hr/>
+@if(Model.Orders.Count() > 0)
+{
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Order Number</th>
+                <th scope="col">Order Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Invoice Amount</th>
+                <th scope="col">Tracking Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var order in Model.Orders)
+            {
+                <tr>
+                    <td>@order.ID</td>
+                    <td>@order.PlacedDate.ToShortDateString()</td>
+                    <td>@order.OrderStatusID</td>
+                    <td>@order.Total.ToString("C")</td>
+                    <td>@order.TrackingCode</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+	<p>You haven't placed any orders yet. Hurry up and buy something already.</p>
+}

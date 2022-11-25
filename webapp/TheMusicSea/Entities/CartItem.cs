@@ -8,7 +8,17 @@ namespace TheMusicSea.Entities
         public int CartID { get; set; }
         public int ItemID { get; set; }
         public int Quantity { get; set; }
-        
+
+        public Item? Item { get; set; }
+
+        public double LineItemPrice
+        {
+            get
+            {
+                return Quantity * Item.Price;
+            }
+        }
+
         public CartItem(int id, int cartId, int itemId, int quantity)
         {
             this.ID = id;

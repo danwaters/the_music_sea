@@ -122,3 +122,12 @@ insert into Customer (FirstName, LastName, Email, Phone, AddressLine1, AddressLi
 # Customer ID 1 (Bob McTestuser) gets assigned a cart (ID 1)
 # Ideally, when new users are created, they get their own cart, but user self-creation is out of scope for this project
 insert into Cart (CustomerID) VALUES (1);
+
+# Order Status
+# This is mirrored in the app with an enum
+insert into OrderStatus (ID, Status) VALUES
+	(1, "Initiated"),
+    (2, "Confirmed"),
+    (3, "Shipped"), 
+    (4, "Canceled"),
+    (5, "Closed");

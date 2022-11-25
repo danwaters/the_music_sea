@@ -1,0 +1,18 @@
+﻿@page
+@model TheMusicSea.Pages.OrderThankYouModel
+@{
+	ViewData["Title"] = "Thanks For Your Order!";
+}
+<div class="text-center">
+    <h1 class="display-5">Thanks for your order</h1>
+	<p>Your order has been placed! Your Sales Engineer @Model.SalesEngineerFullName will contact you shortly to confirm your order.</p>
+	<p>If you need to contact your Sales Engineer, please find their contact information below:</p>
+	<div class="card mx-auto" style="width: 18rem;">
+		<img src="images/se/@Model.SalesEngineer.PhotoURI" class="card-img-top" alt="@Model.SalesEngineerFullName">
+		<h5 class="card-title">@Model.SalesEngineerFullName</h5>
+		<p class="card-text">@Model.SalesEngineer.Phone</p>
+		<p class="card-text">@Model.SalesEngineer.Email</p>
+		<a href="mailto:@Model.SalesEngineer.Email">Send email</a>
+	</div>
+	<a href="@Url.Page("/ViewOrders")" class="link-success">View my orders</a>
+</div>

@@ -23,6 +23,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" href="@Url.Page("/ViewCart", new {customerId = Entities.Customer.DefaultCustomerID})">View Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="@Url.Page("/ViewOrders", new {customerId = Entities.Customer.DefaultCustomerID})">View My Orders</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Administration/Admin">Admin</a>
                         </li>
                     </ul>

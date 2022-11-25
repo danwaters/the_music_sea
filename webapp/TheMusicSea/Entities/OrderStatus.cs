@@ -20,4 +20,13 @@ namespace TheMusicSea.Entities
                 row["status"].ToString());
         }
     }
+
+    public enum OrderStatusEnum
+    {
+        Initiated = 1,
+        Confirmed = 2,
+        Shipped = 3,
+        Canceled = 4,
+        Closed = 5
+    }
 }

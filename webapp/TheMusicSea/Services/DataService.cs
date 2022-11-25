@@ -5,6 +5,7 @@ using System.Linq;
 using Org.BouncyCastle.Asn1;
 using System.Xml.Linq;
 using System.Globalization;
+using TheMusicSea.Helpers;
 
 namespace TheMusicSea.Services
 {
@@ -22,10 +23,17 @@ namespace TheMusicSea.Services
         List<ItemCategory> GetItemCategoriesByItemID(int itemId);
         Cart GetCartByCustomerID(int customerId);
         Cart GetCartByID(int cartId);
+        List<CartItem> GetCartItemsByCartId(int cartId);
+        CartItem GetCartItemById(int cartItemId);
+        List<CustomerOrder> GetOrdersByCustomerId(int customerId);
+        Customer GetCustomerById(int customerId);
+        List<CartItem> DeleteCartItemById(int cartItemId);
         Department AddDepartment(string name, string description);
         Category AddCategory(string name);
         SalesEngineer AddSalesEngineer(string firstName, string lastName, string email, string phone, int specialtyDepartmentId, string photoUri);
         Item AddItem(string sku, string name, string description, double msrp, double price, string photoUri, int inventoryCount, int departmentId, List<int> categoryIds);
+        Cart AddItemToCart(int cartId, int itemId, int quantity);
+        CustomerOrder AddCustomerOrder(int customerId, int salesEngineerId, DateTime placedDate, DateTime? shippedDate, int orderStatusId, double subtotal, double tax, double total, string trackingCode);
         Department UpdateDepartment(int id, string name, string description);
         Category UpdateCategory(int id, string name);
         SalesEngineer UpdateSalesEngineer(int id, string firstName, string lastName, string email, string phone, int specialtyDepartmentId, string photoUri);
@@ -175,6 +183,53 @@ namespace TheMusicSea.Services
             var row = dt.Rows[0];
             return Cart.FromDataRow(row);
         }
+        public List<CartItem> GetCartItemsByCartId(int cartId)
+        {
+            // In this case we hydrate the Item itself to make it easier when we view the cart
+            string sql = $"SELECT ID, CartID, ItemID, Quantity FROM CartItem WHERE CartID = {cartId}";
+            var dt = _mysql.ExecuteReaderCommand(sql);
+            var cartItems = new List<CartItem>();
+            foreach(DataRow row in dt.Rows)
+            {
+                var cartItem = CartItem.FromDataRow(row);
+                cartItem.Item = GetItemByID(cartItem.ItemID);
+                cartItems.Add(cartItem);
+            }
+            return cartItems;
+        }
+        public CartItem GetCartItemById(int cartItemId)
+        {
+            string sql = $"SELECT ID, CartID, ItemID, Quantity FROM CartItem WHERE ID = {cartItemId};";
+            var dt = _mysql.ExecuteReaderCommand(sql);
+            var row = dt.Rows[0];
+            return CartItem.FromDataRow(row);
+        }
+        public List<CustomerOrder> GetOrdersByCustomerId(int customerId)
+        {
+            string sql = $"SELECT ID, CustomerID, SalesEngineerID, PlacedDate, ShippedDate, OrderStatusID, Subtotal, Tax, Total, TrackingCode FROM CustomerOrder WHERE CustomerID = {customerId};";
+            var dt = _mysql.ExecuteReaderCommand(sql);
+            var orders = new List<CustomerOrder>();
+            foreach(DataRow row in dt.Rows)
+            {
+                orders.Add(CustomerOrder.FromDataRow(row));
+            }
+            return orders;
+        }
+        public Customer GetCustomerById(int customerId)
+        {
+            string sql = $"SELECT ID, FirstName, LastName, Email, Phone, AddressLine1, AddressLine2, City, StateProvince, Postcode, Country, SalesEngineerID FROM Customer WHERE ID = {customerId};";
+            var dt = _mysql.ExecuteReaderCommand(sql);
+            var row = dt.Rows[0];
+            return Customer.FromDataRow(row);
+        }
+        public List<CartItem> DeleteCartItemById(int cartItemId)
+        {
+            var cartItem = GetCartItemById(cartItemId);  
+            string sql = $"DELETE FROM CartItem WHERE ID = {cartItemId};";
+            _mysql.ExecuteDelete(sql);
+
+            return GetCartItemsByCartId(cartItem.CartID);
+        }
         public Department AddDepartment(string name, string description)
         {
             string sql = $"INSERT INTO Department (Name, Description) VALUES ('{name}', '{description}');";
@@ -218,6 +273,22 @@ namespace TheMusicSea.Services
                 _mysql.ExecuteMultiRowInsert(insertCategoriesSql);
             }
             return new Item(id, sku, name, description, msrp, price, photoUri, inventoryCount, departmentId);
+        }
+        public Cart AddItemToCart(int cartId, int itemId, int quantity)
+        {
+            string sql = $"INSERT INTO CartItem (CartID, ItemID, Quantity) VALUES ({cartId}, {itemId}, {quantity});";
+            _mysql.ExecuteInsert(sql);
+            return GetCartByID(cartId);
+        }
+        public CustomerOrder AddCustomerOrder(int customerId, int salesEngineerId, DateTime placedDate, DateTime? shippedDate, int orderStatusId, double subtotal, double tax, double total, string trackingCode)
+        {
+            var customer = GetCustomerById(customerId);
+            string sql = $@"INSERT INTO CustomerOrder (CustomerID, SalesEngineerID, PlacedDate, ShippedDate, OrderStatusID, Subtotal, Tax, Total, TrackingCode) 
+                VALUES ({customerId}, {customer.SalesEngineerID}, '{placedDate.ToMySqlDatetime()}', NULL, {orderStatusId}, {subtotal}, {tax}, {total}, '{trackingCode}');";
+
+            int id = _mysql.ExecuteInsert(sql);
+
+            return new CustomerOrder(id, customerId, placedDate, shippedDate, orderStatusId, subtotal, tax, total, trackingCode);
         }
         public Department UpdateDepartment(int id, string name, string description)
         {

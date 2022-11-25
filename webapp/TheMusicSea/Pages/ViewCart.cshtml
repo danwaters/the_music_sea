@@ -1,0 +1,59 @@
+﻿@page
+@model TheMusicSea.Pages.ViewCartModel
+@{
+	ViewData["Title"] = "Cart";
+}
+<div class="text-center">
+    <h1 class="display-5">Your Cart</h1>
+    <p><strong>Ready to check out?</strong></p>
+    <p><a href="@Url.Page("/Index")" class="link-secondary">Keep Shopping</a></p>
+</div>
+<hr/>
+
+@if(Model.CartItems.Count() > 0)
+{
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Product</th>
+                <th scope="col">MSRP</th>
+                <th scope="col">Your Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Item Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <th scope="row">@item.Item.Name</th>
+                    <td>$@item.Item.MSRP</td>
+                    <td class="@item.Item.SaleClass">$@item.Item.Price</td>
+                    <td>@item.Quantity <a asp-page-handler="RemoveCartItem" asp-route-id="@item.ID">Remove</a></td>
+                    <td>@item.LineItemPrice.ToString("C")</td>
+                </tr>
+            }
+            <tr class="table-secondary">
+                <td colspan="4"><p class="text-end"><strong>Subtotal</strong></p></td>
+                <td>@Model.Subtotal.ToString("C")</td>
+            </tr>
+            <tr class="table-secondary">
+                <td colspan="4"><p class="text-end"><strong>Tax</strong></p></td>
+                <td>@Model.TaxAmount.ToString("C") (@Model.Tax.ToString("P"))</td>
+            </tr>
+            <tr class="table-secondary">
+                <td colspan="4"><p class="text-end"><strong>Total</strong></p></td>
+                <td>@Model.Total.ToString("C")</td>
+            </tr>
+        </tbody>
+    </table>
+    <form method="post">
+        <input type="hidden" asp-for="CartID" />
+        <input type="submit" class="btn btn-primary btn-lg" value="Place Order" />
+    </form>
+}
+else
+{
+    <h4>No items in your cart. Why not buy something?</h4>
+}
+
