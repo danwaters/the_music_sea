@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using MySql.Data;
-using System.Data;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using TheMusicSea.Entities;
 using TheMusicSea.Services;
 

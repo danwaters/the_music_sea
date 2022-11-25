@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Org.BouncyCastle.Asn1.Mozilla;
-using System.Xml.Linq;
-using TheMusicSea.Entities;
 using TheMusicSea.Services;
 
 namespace TheMusicSea.Pages.Administration.SalesEngineer
