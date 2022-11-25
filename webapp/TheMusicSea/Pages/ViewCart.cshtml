@@ -27,8 +27,8 @@
             {
                 <tr>
                     <th scope="row">@item.Item.Name</th>
-                    <td>$@item.Item.MSRP</td>
-                    <td class="@item.Item.SaleClass">$@item.Item.Price</td>
+                    <td>@item.Item.MSRP.ToString("C")</td>
+                    <td class="@item.Item.SaleClass">@item.Item.Price.ToString("C")</td>
                     <td>@item.Quantity <a asp-page-handler="RemoveCartItem" asp-route-id="@item.ID">Remove</a></td>
                     <td>@item.LineItemPrice.ToString("C")</td>
                 </tr>
